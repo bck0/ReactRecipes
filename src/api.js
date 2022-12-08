@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://exercise.cngroup.dk/api/';
+const apiUrl = process.env.REACT_APP_API_URL;
 
 export const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: apiUrl,
   headers: {
     'Cache-Control': 'no-cache',
     Pragma: 'no-cache',

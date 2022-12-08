@@ -2,7 +2,7 @@ import React from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { Box, Heading, Link, HStack } from '@chakra-ui/react';
 
-export function AppHeader() {
+const AppHeader = () => {
   return (
     <Box
       as="header"
@@ -28,4 +28,6 @@ export function AppHeader() {
       </Box>
     </Box>
   );
-}
+};
+
+export default AppHeader;

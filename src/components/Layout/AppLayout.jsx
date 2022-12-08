@@ -1,10 +1,9 @@
 import React from 'react';
 import { Box } from '@chakra-ui/react';
 
-import { AppHeader } from './AppHeader';
-import { AppFooter } from './AppFooter';
-
-export function AppLayout({ children }) {
+import AppHeader from '../Header/AppHeader';
+import AppFooter from '../Footer/AppFooter';
+const AppLayout = ({ children }) => {
   return (
     <>
       <AppHeader />
@@ -12,4 +11,5 @@ export function AppLayout({ children }) {
       <AppFooter />
     </>
   );
-}
+};
+export default AppLayout;
