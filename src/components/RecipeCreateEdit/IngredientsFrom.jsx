@@ -1,10 +1,35 @@
 import { Button, HStack, Input, Text, VStack } from '@chakra-ui/react';
+import { useReducer } from 'react';
+import {
+  ingredientReducer,
+  INITIAL_STATE_INGREDIENT,
+} from './ingredientReducer';
 
-const IngredientsForm = ({
-  stateIngredient,
-  handleIngredient,
-  handlePushToList,
-}) => {
+const IngredientsForm = ({ dispatch }) => {
+  //ingredient reducer
+  const [stateIngredient, ingredientDispatch] = useReducer(
+    ingredientReducer,
+    INITIAL_STATE_INGREDIENT,
+  );
+
+  //handlovani inputu do ingredientReduceru
+  const handleIngredient = (e) => {
+    ingredientDispatch({
+      type: 'CHANGE_INPUT',
+      payload: { name: e.target.name, value: e.target.value },
+    });
+  };
+
+  //pridani ingredience do formReduceru
+  const handlePushToList = () => {
+    dispatch({
+      type: 'ADD_INGREDIENT',
+      payload: stateIngredient,
+    });
+    //Vrati UseReducer state pro jedenu ingredienci do puvodniho stavu
+    ingredientDispatch({ type: 'RESET', payload: INITIAL_STATE_INGREDIENT });
+  };
+
   return (
     <>
       <Text>Přídat ingredienci</Text>

@@ -14,10 +14,7 @@ import { useState, useReducer, useEffect } from 'react';
 import {
   formReducer,
   INITIAL_STATE,
-  TEST_DATA,
 } from '../components/RecipeCreateEdit/formReducer';
-import { ingredientReducer } from '../components/RecipeCreateEdit/ingredientReducer';
-import { INITIAL_STATE_INGREDIENT } from '../components/RecipeCreateEdit/ingredientReducer';
 import ReactMarkdown from 'react-markdown';
 import { useNavigate } from 'react-router-dom';
 import usePost from '../hooks/useFetch/usePost.js';
@@ -30,7 +27,7 @@ const RecipeAddPage = () => {
   const handleNavigate = () => navigate('/');
   //in edit, put data here
 
-  // *** formReducer ***
+  // *formReducer
   const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
   //pridani dat z formualre do formReduceru
   const handleChange = (e) => {
@@ -40,48 +37,10 @@ const RecipeAddPage = () => {
     });
   };
 
-  //pridani ingredience z ingredientReducer do formReduceru
-  const handlePushIngredient = (ingredient) => {
-    dispatch({
-      type: 'ADD_INGREDIENT',
-      payload: ingredient,
-    });
-  };
-
-  //middle area
-  const [groupName, setGroupName] = useState();
-
-  //pridani skupiny rovnou do formReduceru
-  const handleAddGroup = () => {
-    handlePushIngredient({ name: groupName, isGroup: true });
-    setGroupName('');
-  };
-
-  //pridani ingredience rovnou do formReduceru
-  const handlePushToList = () => {
-    handlePushIngredient(stateIngredient);
-    //Vrati UseReducer state pro jedenu ingredienci do puvodniho stavu
-    ingredientDispatch({ type: 'RESET', payload: INITIAL_STATE_INGREDIENT });
-  };
-
-  //*** ingredient reducer ***
-  const [stateIngredient, ingredientDispatch] = useReducer(
-    ingredientReducer,
-    INITIAL_STATE_INGREDIENT,
-  );
-
-  //handlovani inputu do ingredientReduceru
-  const handleIngredient = (e) => {
-    ingredientDispatch({
-      type: 'CHANGE_INPUT',
-      payload: { name: e.target.name, value: e.target.value },
-    });
-  };
-
-  //test
   const { onSubmit, response, isLoading, error } = usePost(`/recipes`, state);
 
   const { addToast } = CustomToast();
+
   useEffect(() => {
     if (error !== '') {
       addToast({ message: error.response.data.message, type: 'error' });
@@ -91,6 +50,10 @@ const RecipeAddPage = () => {
       navigate(`/recept/${state.slug}`);
     }
   }, [error, response, isLoading]);
+
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
 
   const onSave = (e) => {
     e.preventDefault();
@@ -130,16 +93,7 @@ const RecipeAddPage = () => {
             {/* LEFT */}
             <BasicData state={state} handleChange={handleChange} />
             {/* middle */}
-            <IngredientsEdit
-              state={state}
-              stateIngredient={stateIngredient}
-              dispatch={dispatch}
-              handleIngredient={handleIngredient}
-              handlePushToList={handlePushToList}
-              setGroupName={setGroupName}
-              groupName={groupName}
-              handleAddGroup={handleAddGroup}
-            />
+            <IngredientsEdit state={state} dispatch={dispatch} />
             {/* right  */}
             <Flex direction="column" h="40vh" w={{ md: '50vw', xl: '70vw' }}>
               <Heading as="h2" size="md" fontWeight="normal">
