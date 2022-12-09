@@ -162,7 +162,7 @@ export const formReducer = (state, action) => {
     case 'SET_SLUG':
       return {
         ...state,
-        slug: slug(state.title, '_'),
+        slug: slug(state.title, '-'),
       };
     default:
       return state;

@@ -1,22 +1,28 @@
 import { api } from '../../api';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 const usePost = (url, state) => {
-  const [response, setResponse] = useState();
+  const [response, setResponse] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
   const postData = () => {
     setIsLoading(true);
+    setError('');
     api
       .post(url, state)
-      .then((res) => setResponse(res))
+      .then((res) => {
+        if (res.status >= 200 && res.status < 300) {
+          setResponse(true);
+        }
+      })
       .catch((error) => setError(error))
-      .finally(() => setIsLoading(false));
-    console.log('fetch');
+      .finally(() => {
+        setIsLoading(false);
+      });
+    // setResponse(true); //pak smazat!!!!!!!!!!!!!!!!!!!
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = () => {
     postData();
   };
 

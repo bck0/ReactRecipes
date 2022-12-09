@@ -1,24 +1,16 @@
 import {
-  Alert,
-  AlertIcon,
   Box,
   Button,
   Flex,
   FormControl,
   Heading,
-  HStack,
   Input,
-  InputGroup,
-  InputRightAddon,
   Spacer,
   Stack,
-  Text,
   Textarea,
-  VStack,
 } from '@chakra-ui/react';
 
-import { useState, useEffect, useReducer } from 'react';
-import IngredientsList from '../components/RecipeCreateEdit/IngredientsList';
+import { useState, useReducer, useEffect } from 'react';
 import {
   formReducer,
   INITIAL_STATE,
@@ -31,6 +23,7 @@ import { useNavigate } from 'react-router-dom';
 import usePost from '../hooks/useFetch/usePost.js';
 import BasicData from '../components/RecipeCreateEdit/BasicData';
 import IngredientsEdit from '../components/RecipeCreateEdit/IngredientsEdit';
+import { CustomToast } from '../components/Feedback/CustomToast';
 
 const RecipeAddPage = () => {
   const navigate = useNavigate();
@@ -86,15 +79,28 @@ const RecipeAddPage = () => {
   };
 
   //test
-  const { onSubmit, isLoading, error } = usePost(`/recipes`, state);
+  const { onSubmit, response, isLoading, error } = usePost(`/recipes`, state);
+
+  const { addToast } = CustomToast();
   useEffect(() => {
-    const apiUrl = process.env.REACT_APP_API_URL;
-    console.log(process.env.REACT_APP_API_URL);
-  }, [state]);
+    if (error !== '') {
+      addToast({ message: error.response.data.message, type: 'error' });
+    }
+    if (response && !isLoading) {
+      addToast({ message: 'uspesny', type: 'success' });
+      navigate(`/recept/${state.slug}`);
+    }
+  }, [error, response, isLoading]);
+
+  const onSave = (e) => {
+    e.preventDefault();
+    dispatch({ type: 'SET_SLUG' });
+    onSubmit();
+  };
 
   return (
     <Box px={5}>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSave}>
         <Box>
           <Stack my={4} direction={{ base: 'column', md: 'column', lg: 'row' }}>
             <Heading as="h1">
