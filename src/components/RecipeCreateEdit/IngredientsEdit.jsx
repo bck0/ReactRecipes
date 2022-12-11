@@ -1,10 +1,6 @@
 import { Alert, AlertIcon, Heading, VStack } from '@chakra-ui/react';
-import { useContext, useReducer, useState } from 'react';
+import { useContext } from 'react';
 import { formContext } from './formReducer';
-import {
-  ingredientReducer,
-  INITIAL_STATE_INGREDIENT,
-} from './ingredientReducer';
 import IngredientsForm from './IngredientsFrom';
 import IngredientsGroupForm from './IngredientsGroupForm';
 import IngredientsList from './IngredientsList';

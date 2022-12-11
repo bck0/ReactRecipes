@@ -22,9 +22,19 @@ const RecipeListPage = () => {
     setSearchValue(e.currentTarget.value);
   }
 
-  const filteredRecipes = recipes.filter((recipe) =>
-    recipe.title.toLowerCase().includes(searchValue.toLowerCase()),
-  );
+  const filteredRecipes = recipes.filter((recipe) => {
+    const normalized = searchValue
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+
+    const normalizedTitle = recipe.title
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+
+    return normalizedTitle.includes(normalized);
+  });
 
   return (
     <Box px={5}>

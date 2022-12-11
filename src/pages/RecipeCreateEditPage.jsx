@@ -17,7 +17,6 @@ import {
   formReducer,
   INITIAL_STATE,
 } from '../components/RecipeCreateEdit/formReducer';
-import ReactMarkdown from 'react-markdown';
 import { useLocation, useNavigate } from 'react-router-dom';
 import usePost from '../hooks/useFetch/usePost.js';
 import BasicData from '../components/RecipeCreateEdit/BasicData';
@@ -28,7 +27,7 @@ import DirectionsMarkDown from '../components/MarkDown/DirectionsMarkDown';
 
 const RecipeCreateEditPage = () => {
   const navigate = useNavigate();
-  const handleNavigate = () => navigate('/');
+  const handleNavigate = () => navigate(-1);
   const [url, setUrl] = useState('/recipes');
 
   const location = useLocation();
@@ -69,10 +68,6 @@ const RecipeCreateEditPage = () => {
       navigate(`/recept/${state.slug}`);
     }
   }, [error, response, isLoading]);
-
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
 
   const onSave = (e) => {
     if (state.title !== '') {

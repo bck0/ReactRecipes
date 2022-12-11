@@ -2,26 +2,22 @@ import {
   Box,
   Heading,
   Text,
-  List,
-  ListItem,
   Button,
   Stack,
   Spacer,
   Link,
-  HStack,
-  SimpleGrid,
   Flex,
   Alert,
   AlertIcon,
+  useDisclosure,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import { useEffect, useRef, useState } from 'react';
 import {
   useParams,
   Link as ReactRouterLink,
   useNavigate,
 } from 'react-router-dom';
+import AlertDelete from '../components/Feedback/AlertDelete';
 import { CustomToast } from '../components/Feedback/CustomToast';
 import LoadingSpinner from '../components/Feedback/LoadingSpinner';
 import DirectionsMarkDown from '../components/MarkDown/DirectionsMarkDown';
@@ -37,7 +33,6 @@ const RecipeDetailPage = () => {
   const { data: detail, isLoading, error } = useGet(`/recipes/${slug}`);
   const [lastModified, setLastModified] = useState('');
 
-  console.log(detail.directions);
   useEffect(() => {
     if (detail.lastModifiedDate) {
       const date = new Date(detail.lastModifiedDate);
@@ -74,6 +69,9 @@ const RecipeDetailPage = () => {
     }
   }, [errorDlt, responseDlt, isLoadingDlt]);
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
+
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -97,9 +95,15 @@ const RecipeDetailPage = () => {
               >
                 <Button mr={2}>Edit</Button>
               </Link>
-              <Button colorScheme="red" onClick={handleDelete}>
+              <Button colorScheme="red" onClick={onOpen}>
                 Delete
               </Button>
+              <AlertDelete
+                isOpen={isOpen}
+                handleDelete={handleDelete}
+                onClose={onClose}
+                cancelRef={cancelRef}
+              />
             </Box>
           </Stack>
 

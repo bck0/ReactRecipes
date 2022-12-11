@@ -1,5 +1,5 @@
 import { Button, HStack, Input, Text, VStack } from '@chakra-ui/react';
-import { useContext, useReducer, useEffect } from 'react';
+import { useContext, useReducer } from 'react';
 import { formContext } from './formReducer';
 import {
   ingredientReducer,
@@ -41,6 +41,7 @@ const IngredientsForm = () => {
         <HStack>
           <Input
             value={stateIngredient.amount}
+            placeholder="Množství"
             name="amount"
             type="number"
             onChange={handleIngredient}
