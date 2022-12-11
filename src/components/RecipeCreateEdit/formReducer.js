@@ -1,3 +1,4 @@
+import { createContext } from 'react';
 import slug from 'slug';
 
 export const INITIAL_STATE = {
@@ -11,6 +12,8 @@ export const INITIAL_STATE = {
   lastModifiedDate: '',
   __v: 0,
 };
+
+export const formContext = createContext();
 
 export const formReducer = (state, action) => {
   switch (action.type) {
@@ -50,6 +53,9 @@ export const formReducer = (state, action) => {
         ...state,
         slug: slug(state.title, '-'),
       };
+    case 'UPDATE_INIT_DATA':
+      return action.payload;
+
     default:
       return state;
   }

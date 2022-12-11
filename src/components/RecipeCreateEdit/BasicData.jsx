@@ -6,8 +6,12 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react';
+import { useContext } from 'react';
+import { formContext } from './formReducer';
+import InputSearch from './InputSearch';
 
-const BasicData = ({ state, handleChange }) => {
+const BasicData = () => {
+  const { state, dispatch, handleChange } = useContext(formContext);
   return (
     <Stack w={{ lg: '25vw' }}>
       <Heading as="h2" size="md" fontWeight="normal">
@@ -33,13 +37,14 @@ const BasicData = ({ state, handleChange }) => {
         name="servingCount"
         onChange={handleChange}
       ></Input>
-      <Text>Příloha (search)</Text>
-      <Input
+      <Text>Příloha</Text>
+      <InputSearch
         value={state.sideDish}
-        name="sideDish"
-        type="text"
-        onChange={handleChange}
-      ></Input>
+        name={'sideDish'}
+        placeholder={''}
+        url={'/recipes/side-dishes'}
+        dispatch={dispatch}
+      />
     </Stack>
   );
 };

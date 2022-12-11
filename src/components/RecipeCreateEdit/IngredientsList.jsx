@@ -1,8 +1,13 @@
 import { List } from '@chakra-ui/react';
+import { useContext } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { formContext } from './formReducer';
 import IngredientsItem from './IngredientsItem';
 
-const IngredientsList = ({ ingredients, dispatch }) => {
+const IngredientsList = () => {
+  const { state, dispatch } = useContext(formContext);
+  const ingredients = state.ingredients;
+
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
     dispatch({

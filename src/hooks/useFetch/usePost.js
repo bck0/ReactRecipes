@@ -19,7 +19,6 @@ const usePost = (url, state) => {
       .finally(() => {
         setIsLoading(false);
       });
-    // setResponse(true); //pak smazat!!!!!!!!!!!!!!!!!!!
   };
 
   const onSubmit = () => {

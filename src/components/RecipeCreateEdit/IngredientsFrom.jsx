@@ -1,11 +1,15 @@
 import { Button, HStack, Input, Text, VStack } from '@chakra-ui/react';
-import { useReducer } from 'react';
+import { useContext, useReducer, useEffect } from 'react';
+import { formContext } from './formReducer';
 import {
   ingredientReducer,
   INITIAL_STATE_INGREDIENT,
 } from './ingredientReducer';
+import InputSearch from './InputSearch';
 
-const IngredientsForm = ({ dispatch }) => {
+const IngredientsForm = () => {
+  const { dispatch } = useContext(formContext);
+
   //ingredient reducer
   const [stateIngredient, ingredientDispatch] = useReducer(
     ingredientReducer,
@@ -47,17 +51,18 @@ const IngredientsForm = ({ dispatch }) => {
             type="text"
             value={stateIngredient.amountUnit}
             name="amountUnit"
+            autoComplete="off"
             onChange={handleIngredient}
           ></Input>
         </HStack>
         <HStack>
-          <Input
-            placeholder="Název"
-            type="text"
+          <InputSearch
             value={stateIngredient.name}
-            name="name"
-            onChange={handleIngredient}
-          ></Input>
+            name={'name'}
+            placeholder={'Název'}
+            url={'/recipes/ingredients'}
+            dispatch={ingredientDispatch}
+          />
           <Button onClick={handlePushToList}>+ Přidat</Button>
         </HStack>
       </VStack>

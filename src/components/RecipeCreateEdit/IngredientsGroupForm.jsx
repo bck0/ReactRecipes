@@ -1,14 +1,17 @@
 import { Button, HStack, Input, Text } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { formContext } from './formReducer';
 
-const IngredientsGroupForm = ({ dispatch }) => {
+const IngredientsGroupForm = () => {
+  const { dispatch } = useContext(formContext);
+
   const [groupName, setGroupName] = useState('');
 
   //pridani skupiny do formReduceru
   const handleAddGroup = () => {
     dispatch({
       type: 'ADD_INGREDIENT',
-      payload: { name: groupName, isGroup: true },
+      payload: { name: groupName, amount: 0, amountUnit: '', isGroup: true },
     });
     setGroupName('');
   };
@@ -20,6 +23,7 @@ const IngredientsGroupForm = ({ dispatch }) => {
           placeholder="Nová skupina"
           type="text"
           value={groupName}
+          autoComplete="off"
           onChange={(e) => setGroupName(e.target.value)}
         ></Input>
         <Button onClick={handleAddGroup}>+ Přidat</Button>

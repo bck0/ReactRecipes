@@ -13,7 +13,7 @@ const IngredientsItem = ({ provided, ingredients, handleDelete, index }) => {
       {isGroup ? (
         <SimpleGrid columns={3} p={2} backgroundColor="lightgrey">
           <Flex align="center">
-            <DeleteIcon onClick={() => handleDelete(index)} />
+            <DeleteIcon cursor="pointer" onClick={() => handleDelete(index)} />
           </Flex>
           <Flex justify="center" fontWeight="bold">
             {name}
@@ -25,7 +25,7 @@ const IngredientsItem = ({ provided, ingredients, handleDelete, index }) => {
       ) : (
         <SimpleGrid columns={5} p={2}>
           <Flex align="center">
-            <DeleteIcon onClick={() => handleDelete(index)} />
+            <DeleteIcon cursor="pointer" onClick={() => handleDelete(index)} />
           </Flex>
           <Box>{amount}</Box>
           <Box>{amountUnit}</Box>

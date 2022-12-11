@@ -1,5 +1,6 @@
 import { Alert, AlertIcon, Heading, VStack } from '@chakra-ui/react';
-import { useReducer, useState } from 'react';
+import { useContext, useReducer, useState } from 'react';
+import { formContext } from './formReducer';
 import {
   ingredientReducer,
   INITIAL_STATE_INGREDIENT,
@@ -8,16 +9,8 @@ import IngredientsForm from './IngredientsFrom';
 import IngredientsGroupForm from './IngredientsGroupForm';
 import IngredientsList from './IngredientsList';
 
-const IngredientsEdit = ({ state, dispatch }) => {
-  //middle area
-  //pridani ingredience z ingredientReducer do formReduceru
-  // const handlePushIngredient = (ingredient) => {
-  //   dispatch({
-  //     type: 'ADD_INGREDIENT',
-  //     payload: ingredient,
-  //   });
-  // };
-
+const IngredientsEdit = () => {
+  const { state } = useContext(formContext);
   return (
     <VStack align="stretch" w={{ lg: '30vw' }}>
       <Heading as="h2" size="md" fontWeight="normal">
@@ -29,13 +22,10 @@ const IngredientsEdit = ({ state, dispatch }) => {
           Zatím žádné ingredience.
         </Alert>
       ) : (
-        <IngredientsList
-          ingredients={state.ingredients}
-          dispatch={dispatch}
-        ></IngredientsList>
+        <IngredientsList />
       )}
-      <IngredientsForm dispatch={dispatch} />
-      <IngredientsGroupForm dispatch={dispatch} />
+      <IngredientsForm />
+      <IngredientsGroupForm />
     </VStack>
   );
 };

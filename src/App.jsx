@@ -7,7 +7,7 @@ import { ApiTestPage } from './pages/ApiTestPage';
 import NotFoundPage from './pages/NotFoundPage';
 import RecipeListPage from './pages/RecipeListPage';
 import RecipeDetailPage from './pages/RecipeDetailPage';
-import RecipeAddPage from './pages/RecipeAddPage';
+import RecipeCreateEditPage from './pages/RecipeCreateEditPage';
 
 export function App() {
   return (
@@ -17,7 +17,11 @@ export function App() {
           <Routes>
             <Route path="/" element={<RecipeListPage />} />
             <Route path="/recept/:slug" element={<RecipeDetailPage />} />
-            <Route path="/novy-recept" element={<RecipeAddPage />} />
+            <Route
+              path="/recept/:slug/edit"
+              element={<RecipeCreateEditPage />}
+            />
+            <Route path="/novy-recept" element={<RecipeCreateEditPage />} />
             <Route path="/api-test" element={<ApiTestPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>

@@ -4,14 +4,14 @@ import {
   Image,
   Stack,
   Heading,
-  Text,
   Divider,
   CardFooter,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import PlaceholderImage from '../../images/food-placeholder.png';
+import RecipeInfo from './RecipeInfo';
 
-const RecipeCard = ({ slug, title, preparationTime }) => {
+const RecipeCard = ({ slug, title, preparationTime, sideDish }) => {
   return (
     <Link to={`/recept/${slug}`}>
       <Card maxW="100%" h="full">
@@ -23,13 +23,12 @@ const RecipeCard = ({ slug, title, preparationTime }) => {
           />
           <Stack mt="6" spacing="3">
             <Heading size="md">{title}</Heading>
-            <Text color="blue.600" fontSize="2xl">
-              {preparationTime}
-            </Text>
           </Stack>
         </CardBody>
         <Divider />
-        <CardFooter></CardFooter>
+        <CardFooter>
+          <RecipeInfo preparationTime={preparationTime} sideDish={sideDish} />
+        </CardFooter>
       </Card>
     </Link>
   );

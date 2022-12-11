@@ -1,6 +1,6 @@
 export const INITIAL_STATE_INGREDIENT = {
   name: '',
-  amount: 0,
+  amount: '',
   amountUnit: '',
   isGroup: false,
 };
