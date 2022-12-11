@@ -5,7 +5,7 @@ const useDelete = (url) => {
   const [isLoadingDlt, setIsLoadingDlt] = useState(false);
   const [responseDlt, setResponseDlt] = useState(false);
   const [errorDlt, setErrorDlt] = useState('');
-  console.log(url);
+
   const deleteData = () => {
     setIsLoadingDlt(true);
     setErrorDlt('');
